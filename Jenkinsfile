@@ -1,3 +1,7 @@
+def PYTHON = 'C:\\Users\\Edgars\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
+def NPM = 'C:\\Program Files\\nodejs\\npm.cmd'
+def PM2 = 'C:\\Users\\Edgars\\AppData\\Roaming\\npm\\pm2.cmd'
+
 def deployApp(String envName, String port) {
     bat "pm2 delete greetings-app-${envName} & EXIT /B 0"
     bat "pm2 start app.py --name greetings-app-${envName} --interpreter python -- --port ${port}"
