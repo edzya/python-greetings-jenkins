@@ -3,7 +3,7 @@ def deployApp(envName, port) {
     git branch: 'main', url: 'https://github.com/mtararujs/python-greetings'
     bat "pm2 delete greetings-app-${envName} & EXIT /B 0"
     bat "pm2 start app.py --name greetings-app-${envName} --interpreter python -- --port ${port}"
-    bat 'timeout /t 5 /nobreak >nul'
+    bat 'ping 127.0.0.1 -n 6 > nul'
     bat "powershell -Command \"try { \$r = Invoke-WebRequest -Uri http://127.0.0.1:${port}/greetings -UseBasicParsing; Write-Host \$r.StatusCode; Write-Host \$r.Content } catch { Write-Host \$_; exit 1 }\""
 }
 
