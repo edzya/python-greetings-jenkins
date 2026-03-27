@@ -12,15 +12,6 @@ def runTests(String envName) {
     bat "npm run greetings greetings_${envName}"
 }
 
-def deployApp(envName, port) {
-    echo "Deploying to ${envName.toUpperCase()} environment on port ${port}..."
-    git branch: 'main', url: 'https://github.com/mtararujs/python-greetings'
-    bat "pm2 delete greetings-app-${envName} & EXIT /B 0"
-    bat "pm2 start app.py --name greetings-app-${envName} --interpreter python -- --port ${port}"
-    bat 'timeout /t 5 /nobreak >nul'
-    bat "powershell -Command \"try { \$r = Invoke-WebRequest -Uri http://127.0.0.1:${port}/greetings -UseBasicParsing; Write-Host \$r.StatusCode; Write-Host \$r.Content } catch { Write-Host \$_; exit 1 }\""
-}
-
 pipeline {
     agent any
 
